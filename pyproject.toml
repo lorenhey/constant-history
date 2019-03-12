@@ -1,0 +1,23 @@
+[project]
+name = "constant-history"
+version = "0.1.0"
+description = "A computable history of physical constants"
+authors = [{name = "Loren", email = "lorenhey@example.com"}]
+dependencies = [
+    "pydantic",
+    "typer",
+    "rich",
+    "pandas",
+    "plotly",
+    "fastapi",
+    "uvicorn",
+]
+
+[project.scripts]
+chist = "constant_history.cli:main"
+constant-history = "constant_history.cli:main"
+chist-web = "constant_history.web:run_server"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
