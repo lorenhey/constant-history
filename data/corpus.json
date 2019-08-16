@@ -1,0 +1,289 @@
+{
+  "constants": [
+    {
+      "id": "G",
+      "symbol": "G",
+      "name": "Newtonian constant of gravitation",
+      "category": "gravitation",
+      "description": "The empirical physical constant that participates in the calculation of gravitational force between two bodies.",
+      "aliases": ["gravitational constant", "Big G"]
+    },
+    {
+      "id": "c",
+      "symbol": "c",
+      "name": "Speed of light in vacuum",
+      "category": "electromagnetic",
+      "description": "The speed of light in vacuum.",
+      "aliases": ["speed of light"]
+    },
+    {
+      "id": "h",
+      "symbol": "h",
+      "name": "Planck constant",
+      "category": "quantum",
+      "description": "The quantum of electromagnetic action.",
+      "aliases": ["Planck's constant"]
+    },
+    {
+      "id": "e",
+      "symbol": "e",
+      "name": "Elementary charge",
+      "category": "electromagnetic",
+      "description": "The electric charge carried by a single proton.",
+      "aliases": []
+    },
+    {
+      "id": "alpha",
+      "symbol": "alpha",
+      "name": "Fine-structure constant",
+      "category": "dimensionless",
+      "description": "The fundamental physical constant characterizing the strength of the electromagnetic interaction.",
+      "aliases": []
+    }
+  ],
+  "references": [
+    {
+      "id": "cavendish1798",
+      "citation": "Cavendish, H. (1798). Experiments to determine the Density of the Earth.",
+      "year": 1798
+    },
+    {
+      "id": "codata1986",
+      "citation": "Cohen, E. R., & Taylor, B. N. (1987). The 1986 adjustment of the fundamental physical constants.",
+      "year": 1987
+    },
+    {
+      "id": "codata1998",
+      "citation": "Mohr, P. J., & Taylor, B. N. (2000). CODATA recommended values of the fundamental physical constants: 1998.",
+      "year": 2000
+    },
+    {
+      "id": "codata2014",
+      "citation": "Mohr, P. J., Newell, D. B., & Taylor, B. N. (2016). CODATA recommended values of the fundamental physical constants: 2014.",
+      "year": 2016
+    },
+    {
+      "id": "codata2018",
+      "citation": "Tiesinga, E., Mohr, P. J., Newell, D. B., & Taylor, B. N. (2021). CODATA recommended values of the fundamental physical constants: 2018.",
+      "year": 2021
+    },
+    {
+      "id": "cgpm1983",
+      "citation": "Resolution 1 of the 17th CGPM (1983).",
+      "year": 1983
+    },
+    {
+      "id": "cgpm2018",
+      "citation": "Resolution 1 of the 26th CGPM (2018) - On the revision of the International System of Units (SI).",
+      "year": 2018
+    }
+  ],
+  "institutions": [],
+  "events": [
+    {
+      "id": "G_cavendish",
+      "type": "measurement",
+      "constant_id": "G",
+      "date": {"year": 1798},
+      "source_id": "cavendish1798",
+      "value": 6.74e-11,
+      "unit": "m^3 kg^-1 s^-2",
+      "uncertainty": 0.04e-11,
+      "relative_uncertainty": 0.006,
+      "method": "torsion balance"
+    },
+    {
+      "id": "G_codata1986",
+      "type": "recommended",
+      "constant_id": "G",
+      "date": {"year": 1986},
+      "source_id": "codata1986",
+      "authority": "CODATA",
+      "edition": "CODATA 1986",
+      "value": 6.67259e-11,
+      "unit": "m^3 kg^-1 s^-2",
+      "uncertainty": 0.00085e-11,
+      "relative_uncertainty": 1.28e-4
+    },
+    {
+      "id": "G_codata1998",
+      "type": "recommended",
+      "constant_id": "G",
+      "date": {"year": 1998},
+      "source_id": "codata1998",
+      "authority": "CODATA",
+      "edition": "CODATA 1998",
+      "value": 6.673e-11,
+      "unit": "m^3 kg^-1 s^-2",
+      "uncertainty": 0.01e-11,
+      "relative_uncertainty": 1.5e-3,
+      "notes": "Uncertainty increased due to conflicting measurements in the 1990s."
+    },
+    {
+      "id": "G_codata2014",
+      "type": "recommended",
+      "constant_id": "G",
+      "date": {"year": 2014},
+      "source_id": "codata2014",
+      "authority": "CODATA",
+      "edition": "CODATA 2014",
+      "value": 6.67408e-11,
+      "unit": "m^3 kg^-1 s^-2",
+      "uncertainty": 0.00031e-11,
+      "relative_uncertainty": 4.7e-5
+    },
+    {
+      "id": "G_codata2018",
+      "type": "recommended",
+      "constant_id": "G",
+      "date": {"year": 2018},
+      "source_id": "codata2018",
+      "authority": "CODATA",
+      "edition": "CODATA 2018",
+      "value": 6.67430e-11,
+      "unit": "m^3 kg^-1 s^-2",
+      "uncertainty": 0.00015e-11,
+      "relative_uncertainty": 2.2e-5
+    },
+    {
+      "id": "c_codata1973",
+      "type": "recommended",
+      "constant_id": "c",
+      "date": {"year": 1973},
+      "source_id": "codata1986",
+      "authority": "CODATA",
+      "edition": "CODATA 1973",
+      "value": 299792458,
+      "unit": "m s^-1",
+      "uncertainty": 1.2,
+      "relative_uncertainty": 4e-9
+    },
+    {
+      "id": "c_cgpm1983",
+      "type": "definition",
+      "constant_id": "c",
+      "date": {"year": 1983},
+      "source_id": "cgpm1983",
+      "authority": "CGPM",
+      "value": 299792458,
+      "unit": "m s^-1",
+      "exact": true,
+      "notes": "Meter redefined to fix the speed of light exactly."
+    },
+    {
+      "id": "h_codata1986",
+      "type": "recommended",
+      "constant_id": "h",
+      "date": {"year": 1986},
+      "source_id": "codata1986",
+      "authority": "CODATA",
+      "edition": "CODATA 1986",
+      "value": 6.6260755e-34,
+      "unit": "J s",
+      "uncertainty": 0.0000040e-34,
+      "relative_uncertainty": 6.0e-7
+    },
+    {
+      "id": "h_codata2014",
+      "type": "recommended",
+      "constant_id": "h",
+      "date": {"year": 2014},
+      "source_id": "codata2014",
+      "authority": "CODATA",
+      "edition": "CODATA 2014",
+      "value": 6.626070040e-34,
+      "unit": "J s",
+      "uncertainty": 0.000000081e-34,
+      "relative_uncertainty": 1.2e-8
+    },
+    {
+      "id": "h_cgpm2018",
+      "type": "definition",
+      "constant_id": "h",
+      "date": {"year": 2018},
+      "source_id": "cgpm2018",
+      "authority": "CGPM",
+      "value": 6.62607015e-34,
+      "unit": "J s",
+      "exact": true,
+      "notes": "Kilogram redefined to fix the Planck constant exactly."
+    },
+    {
+      "id": "e_codata1986",
+      "type": "recommended",
+      "constant_id": "e",
+      "date": {"year": 1986},
+      "source_id": "codata1986",
+      "authority": "CODATA",
+      "edition": "CODATA 1986",
+      "value": 1.60217733e-19,
+      "unit": "C",
+      "uncertainty": 0.00000049e-19,
+      "relative_uncertainty": 3.0e-7
+    },
+    {
+      "id": "e_codata2014",
+      "type": "recommended",
+      "constant_id": "e",
+      "date": {"year": 2014},
+      "source_id": "codata2014",
+      "authority": "CODATA",
+      "edition": "CODATA 2014",
+      "value": 1.6021766208e-19,
+      "unit": "C",
+      "uncertainty": 0.0000000098e-19,
+      "relative_uncertainty": 6.1e-9
+    },
+    {
+      "id": "e_cgpm2018",
+      "type": "definition",
+      "constant_id": "e",
+      "date": {"year": 2018},
+      "source_id": "cgpm2018",
+      "authority": "CGPM",
+      "value": 1.602176634e-19,
+      "unit": "C",
+      "exact": true,
+      "notes": "Ampere redefined to fix the elementary charge exactly."
+    },
+    {
+      "id": "alpha_codata1986",
+      "type": "recommended",
+      "constant_id": "alpha",
+      "date": {"year": 1986},
+      "source_id": "codata1986",
+      "authority": "CODATA",
+      "edition": "CODATA 1986",
+      "value": 7.29735308e-3,
+      "unit": "1",
+      "uncertainty": 0.00000033e-3,
+      "relative_uncertainty": 4.5e-8
+    },
+    {
+      "id": "alpha_codata2014",
+      "type": "recommended",
+      "constant_id": "alpha",
+      "date": {"year": 2014},
+      "source_id": "codata2014",
+      "authority": "CODATA",
+      "edition": "CODATA 2014",
+      "value": 7.2973525664e-3,
+      "unit": "1",
+      "uncertainty": 0.0000000017e-3,
+      "relative_uncertainty": 2.3e-10
+    },
+    {
+      "id": "alpha_codata2018",
+      "type": "recommended",
+      "constant_id": "alpha",
+      "date": {"year": 2018},
+      "source_id": "codata2018",
+      "authority": "CODATA",
+      "edition": "CODATA 2018",
+      "value": 7.2973525693e-3,
+      "unit": "1",
+      "uncertainty": 0.0000000011e-3,
+      "relative_uncertainty": 1.5e-10
+    }
+  ]
+}
