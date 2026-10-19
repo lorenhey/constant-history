@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Constant History (CHIST) - Historia Computable de las Constantes Físicas</title>
+  <meta name="description" content="Evolución metrológica, trazabilidad histórica y resolución de incertidumbres de las constantes fundamentales de la física desde el siglo XVII hasta el Nuevo SI de 2019.">
+
+  <!-- KaTeX for Beautiful Math Notation -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Google Fonts & Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Application Bar -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-logo">
+        <i class="fa-solid fa-atom"></i>
+        <span>CHIST</span>
+      </div>
+      <span class="version-badge">v2.0.0</span>
+      <span class="org-tag">Metrología Computacional & Historia de la Física</span>
+    </div>
+
+    <div class="header-controls">
+      <div class="preset-selector-group">
+        <label for="constant-select"><i class="fa-solid fa-scale-balanced"></i> Constante:</label>
+        <select id="constant-select" class="preset-dropdown">
+          <!-- Populated dynamically via JS -->
+        </select>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-print-report" class="btn-action btn-cyan" title="Imprimir Memoria Histórica o Exportar a PDF">
+          <i class="fa-solid fa-print"></i> Imprimir / PDF
+        </button>
+        <button id="btn-export-json" class="btn-action" title="Exportar corpus metrológico completo en JSON">
+          <i class="fa-solid fa-file-code"></i> JSON
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="navigation-bar">
+    <button class="nav-tab-btn active" data-tab="tab-timeline">
+      <i class="fa-solid fa-chart-line"></i> Evolución & Gráficos
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-timemachine">
+      <i class="fa-solid fa-clock-rotate-left"></i> Máquina del Tiempo (As-Of)
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-diff">
+      <i class="fa-solid fa-code-compare"></i> Comparador de Épocas (Diff)
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-newsi">
+      <i class="fa-solid fa-cube"></i> El Nuevo SI (2019)
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-terminal">
+      <i class="fa-solid fa-terminal"></i> Consola CLI chist
+    </button>
+    <button class="nav-tab-btn" data-tab="tab-teoria">
+      <i class="fa-solid fa-book-open"></i> Tratado de Metrología
+    </button>
+  </nav>
+
+  <!-- Main Workspace -->
+  <main class="workspace-container">
+    <div class="tab-content-area">
+
+      <!-- TAB 1: TIMELINE & CHARTS -->
+      <section id="tab-timeline" class="tab-pane active">
+        <!-- Constant Hero Card -->
+        <div class="constant-hero-card">
+          <div class="hero-main">
+            <h1 id="info-const-name">Cargando...</h1>
+            <div class="hero-badges-row">
+              <span id="info-const-category" class="hero-badge badge-cat">Física Fundamental</span>
+              <span id="info-const-unit" class="hero-badge badge-unit">SI</span>
+            </div>
+            <p id="info-const-desc" class="hero-desc"></p>
+          </div>
+          <div class="hero-status-box">
+            <div class="status-lbl">Estado Metrológico Actual</div>
+            <div id="info-const-status" class="status-val">--</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+          <!-- Plot 1: Value with Error Bars -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <span><i class="fa-solid fa-chart-line"></i> Evolución del Valor Aceptado y Barras de Incertidumbre (±σ)</span>
+              <span style="font-size: 0.75rem; color: #94a3b8;">
+                <span style="color: #00e5ff;">●</span> Medición &nbsp;|&nbsp;
+                <span style="color: #f59e0b;">●</span> CODATA &nbsp;|&nbsp;
+                <span style="color: #10b981;">●</span> Definición Exacta
+              </span>
+            </div>
+            <div id="plot-value-container" class="plot-canvas"></div>
+          </div>
+
+          <!-- Plot 2: Log Uncertainty Reduction -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <span><i class="fa-solid fa-arrow-trend-down"></i> Curva de Precisión: Reducción Logarítmica de la Incertidumbre Relativa log₁₀(u_r)</span>
+              <span style="font-size: 0.75rem; color: #10b981; font-weight: 700;">
+                Pendiente de Ganancia de Precisión Metrológica
+              </span>
+            </div>
+            <div id="plot-uncertainty-container" class="plot-canvas"></div>
+          </div>
+        </div>
+
+        <!-- Milestones List -->
+        <div class="milestones-section">
+          <h2 class="milestones-title">
+            <i class="fa-solid fa-timeline"></i> Cronología Detallada de Mediciones y Ajustes
+          </h2>
+          <div id="events-list-container" class="milestones-list">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: TIME MACHINE (AS-OF QUERIES) -->
+      <section id="tab-timemachine" class="tab-pane">
+        <div class="timemachine-controls">
+          <h2 style="color: #fff; font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">
+            <i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-cyan);"></i> Máquina del Tiempo Metrológica
+          </h2>
+          <p style="color: #94a3b8; font-size: 0.9rem; max-width: 650px; margin: 0 auto;">
+            Consultá el estado del consenso científico y los valores aceptados de las constantes en cualquier año sin fuga de datos futuros (<em>strict no-future-leakage</em>).
+          </p>
+
+          <div class="slider-wrapper">
+            <div id="time-machine-year-display" class="tm-year-label">1980</div>
+            <input type="range" id="time-machine-slider" class="tm-slider" min="1790" max="2026" value="1980" step="1">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #64748b; font-family: var(--font-mono); margin-top: 0.5rem;">
+              <span>1790 (Revolución Francesa)</span>
+              <span>1900 (Planck)</span>
+              <span>1969 (1° CODATA)</span>
+              <span>1983 (c exacta)</span>
+              <span>2019 (Nuevo SI)</span>
+              <span>2026 (Hoy)</span>
+            </div>
+          </div>
+        </div>
+
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th>Constante Fundamental</th>
+              <th>Valor Aceptado en ese Año</th>
+              <th>Unidad SI</th>
+              <th>Incertidumbre (±σ)</th>
+              <th>Incertidumbre Relativa (u_r)</th>
+              <th>Estado</th>
+              <th>Fuente Histórica</th>
+            </tr>
+          </thead>
+          <tbody id="time-machine-table-body">
+            <!-- Populated dynamically via JS -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- TAB 3: DIFF COMPARATOR -->
+      <section id="tab-diff" class="tab-pane">
+        <div class="diff-controls-bar">
+          <div class="diff-input-group">
+            <label for="diff-constant-select"><strong>Constante:</strong></label>
+            <select id="diff-constant-select" class="preset-dropdown"></select>
+          </div>
+          <div class="diff-input-group">
+            <label for="diff-year-from"><strong>Desde Año:</strong></label>
+            <input type="number" id="diff-year-from" value="1986" style="width: 80px; padding: 0.4rem; background: #060a12; border: 1px solid var(--border-color); color: #fff; font-family: var(--font-mono); border-radius: 4px;">
+          </div>
+          <div class="diff-input-group">
+            <label for="diff-year-to"><strong>Hasta Año:</strong></label>
+            <input type="number" id="diff-year-to" value="2019" style="width: 80px; padding: 0.4rem; background: #060a12; border: 1px solid var(--border-color); color: #fff; font-family: var(--font-mono); border-radius: 4px;">
+          </div>
+          <button id="btn-run-diff" class="btn-action btn-cyan">
+            <i class="fa-solid fa-calculator"></i> Comparar Épocas
+          </button>
+        </div>
+
+        <div id="diff-result-card">
+          <div style="padding: 2.5rem; text-align: center; color: #64748b; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;">
+            Seleccioná una constante y dos años para analizar la evolución y ganancia de precisión metrológica.
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: THE NEW SI (2019 REDEFINITION) -->
+      <section id="tab-newsi" class="tab-pane">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem;">
+          <h1 style="color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">
+            La Revolución Metrológica del 20 de Mayo de 2019
+          </h1>
+          <p style="color: var(--accent-cyan); font-weight: 600; margin-bottom: 1rem;">
+            El fin definitivo de los artefactos materiales y la fijación exacta de las constantes de la naturaleza.
+          </p>
+          <p style="color: #cbd5e1; line-height: 1.6;">
+            Durante más de un siglo, el kilogramo estuvo definido por un cilindro físico de platino-iridio custodiado en una bóveda del BIPM en Sèvres, Francia (<em>Le Grand Kilo</em>). Si ese artefacto ganaba o perdía un átomo por contaminación superficial, la masa de todo el universo cambiaba formalmente.
+          </p>
+          <p style="color: #cbd5e1; line-height: 1.6; margin-top: 0.75rem;">
+            En la 26ª Conferencia General de Pesas y Medidas (CGPM), la humanidad aprobó un cambio paradigmático: <strong>las unidades ya no se basan en objetos fabricados por el hombre, sino en constantes fundamentales de la física cuántica y relativista fijadas por definición con incertidumbre cero</strong>.
+          </p>
+
+          <div class="new-si-grid">
+            <div class="si-card">
+              <div class="si-card-sym">h</div>
+              <div class="si-card-unit">Constante de Planck &rarr; Define el Kilogramo (kg)</div>
+              <div class="si-card-val">6.626 070 15 × 10⁻³⁴ J·s</div>
+              <p style="font-size: 0.8rem; color: #94a3b8;">Materializada mediante la Balanza de Kibble que iguala potencia mecánica y eléctrica cuántica.</p>
+            </div>
+            <div class="si-card">
+              <div class="si-card-sym">e</div>
+              <div class="si-card-unit">Carga Elemental &rarr; Define el Ampere (A)</div>
+              <div class="si-card-val">1.602 176 634 × 10⁻¹⁹ C</div>
+              <p style="font-size: 0.8rem; color: #94a3b8;">Desacoplado de la fuerza entre conductores infinitos imaginarios.</p>
+            </div>
+            <div class="si-card">
+              <div class="si-card-sym">k_B</div>
+              <div class="si-card-unit">Constante de Boltzmann &rarr; Define el Kelvin (K)</div>
+              <div class="si-card-val">1.380 649 × 10⁻²³ J·K⁻¹</div>
+              <p style="font-size: 0.8rem; color: #94a3b8;">Elimina la dependencia del punto triple del agua químicamente pura (VSMOW).</p>
+            </div>
+            <div class="si-card">
+              <div class="si-card-sym">N_A</div>
+              <div class="si-card-unit">Constante de Avogadro &rarr; Define el Mol (mol)</div>
+              <div class="si-card-val">6.022 140 76 × 10²³ mol⁻¹</div>
+              <p style="font-size: 0.8rem; color: #94a3b8;">Materializado mediante esferas de silicio monocristalino puro ²⁸Si.</p>
+            </div>
+            <div class="si-card">
+              <div class="si-card-sym">c</div>
+              <div class="si-card-unit">Velocidad de la Luz &rarr; Define el Metro (m)</div>
+              <div class="si-card-val">299 792 458 m·s⁻¹</div>
+              <p style="font-size: 0.8rem; color: #94a3b8;">Fijada en 1983. 1 metro es la distancia recorrida en 1/c segundos.</p>
+            </div>
+            <div class="si-card">
+              <div class="si-card-sym">Δν_Cs</div>
+              <div class="si-card-unit">Transición Hiperfina del Cesio &rarr; Define el Segundo (s)</div>
+              <div class="si-card-val">9 192 631 770 Hz</div>
+              <p style="font-size: 0.8rem; color: #94a3b8;">Frecuencia del reloj atómico de cesio-133 sin perturbaciones.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: CLI TERMINAL EMULATOR -->
+      <section id="tab-terminal" class="tab-pane">
+        <div class="cli-terminal-window">
+          <div class="cli-titlebar">
+            <span class="cli-dot dot-red"></span>
+            <span class="cli-dot dot-yellow"></span>
+            <span class="cli-dot dot-green"></span>
+            <span style="margin-left: 0.5rem;"><i class="fa-solid fa-terminal"></i> chist interactive metrology shell</span>
+          </div>
+          <div id="cli-output" class="cli-output-area"></div>
+          <div class="cli-input-row">
+            <span class="cli-prompt-symbol">chist&gt;</span>
+            <input type="text" id="cli-input" class="cli-text-input" placeholder="Escribí un comando ('help', 'chist show h', 'chist value c --year 1980', 'chist diff h')..." autofocus>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: THEORETICAL TREATISE -->
+      <section id="tab-teoria" class="tab-pane">
+        <article style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 2.25rem; line-height: 1.7;">
+          <h1 style="color: #fff; font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem;">
+            Tratado de Metrología Fundamental: La Construcción de las Constantes
+          </h1>
+          <p style="color: var(--accent-cyan); font-weight: 600;">
+            De la astronomía observacional al ajuste por mínimos cuadrados de CODATA y el problema de Big G.
+          </p>
+
+          <div style="background: rgba(0, 229, 255, 0.05); border-left: 3px solid var(--accent-cyan); padding: 1rem; border-radius: 0 4px 4px 0; margin: 1.5rem 0; font-size: 0.9rem;">
+            <strong>Axioma Metrológico:</strong> <em>"Una constante física no se descubre de una vez y para siempre; se refina a través de una red interconectada de relaciones cuánticas y macroscópicas."</em> En metrología cuántica, ninguna constante vive aislada: el ajuste simultáneo garantiza que las leyes de Maxwell, la ecuación de Schrödinger y la relatividad no generen contradicciones internas.
+          </div>
+
+          <h2 style="font-size: 1.35rem; color: #fff; margin-top: 1.75rem; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+            1. El Ajuste Global por Mínimos Cuadrados de CODATA
+          </h2>
+          <p style="color: #cbd5e1; margin-bottom: 1rem;">
+            A partir de 1969, el <em>Committee on Data for Science and Technology</em> (CODATA) instauró el protocolo de ajuste global por mínimos cuadrados ponderados. En lugar de elegir la "mejor" medición de una constante aislada, se formula un sistema sobredeterminado de ecuaciones observacionales donde intervienen decenas de cantidades input:
+          </p>
+          <p style="text-align: center; font-size: 1.15rem; color: #fff; margin: 1.25rem 0;">
+            $$\chi^2 = \sum_{i=1}^{N} \frac{(y_i - f_i(\mathbf{x}))^2}{\sigma_i^2} \longrightarrow \min$$
+          </p>
+          <p style="color: #cbd5e1; margin-bottom: 1rem;">
+            donde \(y_i\) representa cada medición experimental independiente, \(\sigma_i\) su incertidumbre estándar combinada y \(f_i(\mathbf{x})\) la predicción teórica según las relaciones de la física moderna. La minimización de \(\chi^2\) produce un conjunto de valores recomendados internamente coherentes.
+          </p>
+
+          <h2 style="font-size: 1.35rem; color: #fff; margin-top: 1.75rem; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+            2. El Enigma de Big G: La Constante Rebelde
+          </h2>
+          <p style="color: #cbd5e1; margin-bottom: 1rem;">
+            Mientras que constantes como \(c\), \(h\), \(e\) y \(k_B\) han alcanzado incertidumbre cero por definición o precisiones astronómicas de \(10^{-10}\) como \(\alpha\), la constante de gravitación newtoniana \(G\) sigue estancada en una incertidumbre relativa de apenas \(2.2 \times 10^{-5}\) (aproximadamente 22 partes por millón):
+          </p>
+          <ul style="margin-left: 1.5rem; color: #cbd5e1; margin-bottom: 1.25rem;">
+            <li><strong>Debilidad de la Fuerza:</strong> La interacción gravitatoria entre masas de laboratorio (pocos kilogramos de esferas de plomo o tungsteno) es del orden de \(10^{-9}\,\text{N}\), fácilmente perturbada por gradientes térmicos, vibraciones sísmicas, mareas terrestres y micro-corrientes de aire.</li>
+            <li><strong>Ausencia de Anclaje Cuántico:</strong> A diferencia del electromagnetismo (efecto Hall cuántico y efecto Josephson), no existe una teoría cuántica de la gravedad validada experimentalmente que vincule \(G\) con frecuencias atómicas o constantes universales.</li>
+            <li><strong>La Crisis de CODATA 1998:</strong> Durante la década de 1990, laboratorios de primer nivel en Alemania, Reino Unido y Estados Unidos obtuvieron resultados que diferían entre sí en más de 40 desviaciones estándar. Como consecuencia, CODATA debió <em>multiplicar por 10</em> la incertidumbre oficial en 1998 para abarcar los resultados discordantes.</li>
+          </ul>
+
+          <h2 style="font-size: 1.35rem; color: #fff; margin-top: 1.75rem; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+            3. Aplicación Industrial y de Ingeniería (Vínculo con Planta)
+          </h2>
+          <p style="color: #cbd5e1;">
+            En metrología industrial de alta exigencia (como el control de transductores de par, manómetros de referencia para calderas de vapor y celdas de carga en plantas continuas de Boxmark Leather), la exactitud de los patrones secundarios descansa directamente sobre esta cadena ininterrumpida de calibración. La fijación axiomática de las constantes en 2019 garantiza que cualquier país o planta con instrumentación cuántica adecuada pueda reproducir el kilogramo, el voltio o el kelvin localmente sin depender de un artefacto foráneo.
+          </p>
+        </article>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Script Modules -->
+  <script src="js/constants-data.js"></script>
+  <script src="js/timeline-plotter.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

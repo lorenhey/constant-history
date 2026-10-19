@@ -1,8 +1,8 @@
 [project]
 name = "constant-history"
-version = "0.1.0"
-description = "A computable history of physical constants"
-authors = [{name = "Loren", email = "lorenhey@example.com"}]
+version = "2.0.0"
+description = "A computable history of how physics learned to measure its constants, with interactive web timeline, uncertainty plots, and 2019 SI redefinition explorer."
+authors = [{name = "Lorenzo Pérez", email = "lorenhey@example.com"}]
 dependencies = [
     "pydantic",
     "typer",
@@ -21,3 +21,7 @@ chist-web = "constant_history.web:run_server"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

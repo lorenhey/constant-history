@@ -1,0 +1,764 @@
+/* ==========================================================================
+   constant-history (CHIST) - Comprehensive Stylesheet
+   Metrology & History of Physics Workbench + Printable Scientific Memorandum
+   ========================================================================== */
+
+:root {
+  --bg-dark: #070b14;
+  --bg-card: #0f172a;
+  --bg-panel: #162033;
+  --bg-elevated: #1e293b;
+  --border-color: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --accent-cyan: #00e5ff;
+  --accent-cyan-dim: rgba(0, 229, 255, 0.12);
+  --accent-green: #10b981;
+  --accent-green-dim: rgba(16, 185, 129, 0.12);
+  --accent-amber: #f59e0b;
+  --accent-amber-dim: rgba(245, 158, 11, 0.12);
+  --accent-red: #ef4444;
+  --accent-red-dim: rgba(239, 68, 68, 0.15);
+  --accent-purple: #a855f7;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', "Courier New", Courier, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   APP HEADER
+   ========================================================================== */
+.app-header {
+  background: linear-gradient(180deg, #162033 0%, #0c1220 100%);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.brand-logo i {
+  color: var(--accent-cyan);
+}
+
+.version-badge {
+  font-size: 0.75rem;
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+}
+
+.org-tag {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  border-left: 1px solid var(--border-color);
+  padding-left: 0.75rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.preset-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.preset-selector-group label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.preset-dropdown {
+  background: var(--bg-elevated);
+  color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  outline: none;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-action {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+  background: var(--border-color);
+}
+
+.btn-action.btn-cyan {
+  background: var(--accent-cyan);
+  color: #050b14;
+  border-color: var(--accent-cyan);
+}
+
+.status-pill-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.pill-pass {
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
+  border: 1px solid var(--accent-green);
+}
+
+.pill-warn {
+  background: var(--accent-amber-dim);
+  color: var(--accent-amber);
+  border: 1px solid var(--accent-amber);
+}
+
+.pill-meas {
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
+}
+
+/* ==========================================================================
+   NAVIGATION BAR
+   ========================================================================== */
+.navigation-bar {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  padding: 0 1.5rem;
+  overflow-x: auto;
+}
+
+.nav-tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-tab-btn:hover {
+  color: var(--text-main);
+}
+
+.nav-tab-btn.active {
+  color: var(--accent-cyan);
+  border-bottom-color: var(--accent-cyan);
+  background: rgba(0, 229, 255, 0.05);
+}
+
+/* ==========================================================================
+   WORKSPACE LAYOUT
+   ========================================================================== */
+.workspace-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Tab Content Area */
+.tab-content-area {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  background: var(--bg-dark);
+}
+
+.tab-pane {
+  display: none;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* ==========================================================================
+   CONSTANT HERO / OVERVIEW CARD
+   ========================================================================== */
+.constant-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.hero-main h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.35rem;
+}
+
+.hero-badges-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.hero-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.badge-cat {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid #a855f7;
+}
+
+.badge-unit {
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  font-family: var(--font-mono);
+}
+
+.hero-desc {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.hero-status-box {
+  background: #060a12;
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  min-width: 280px;
+}
+
+.status-lbl {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.35rem;
+}
+
+.status-val {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+/* ==========================================================================
+   CHARTS CONTAINERS
+   ========================================================================== */
+.charts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chart-header {
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.6rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.plot-canvas {
+  width: 100%;
+  min-height: 320px;
+  background: #060a12;
+  position: relative;
+}
+
+/* ==========================================================================
+   MILESTONES LIST
+   ========================================================================== */
+.milestones-section {
+  margin-top: 2rem;
+}
+
+.milestones-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  border-bottom: 1.5px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.milestone-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  transition: border-color 0.2s;
+}
+
+.milestone-card:hover {
+  border-color: var(--accent-cyan);
+}
+
+.milestone-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.milestone-year {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--accent-cyan);
+}
+
+.milestone-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+}
+
+.badge-def {
+  background: var(--accent-green-dim);
+  color: var(--accent-green);
+  border: 1px solid var(--accent-green);
+}
+
+.badge-rec {
+  background: var(--accent-amber-dim);
+  color: var(--accent-amber);
+  border: 1px solid var(--accent-amber);
+}
+
+.badge-meas {
+  background: var(--accent-cyan-dim);
+  color: var(--accent-cyan);
+  border: 1px solid var(--accent-cyan);
+}
+
+.milestone-authority {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.milestone-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.val-mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.milestone-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.milestone-notes {
+  background: #090e1a;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+/* ==========================================================================
+   TIME MACHINE TAB
+   ========================================================================== */
+.timemachine-controls {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.slider-wrapper {
+  margin: 1.5rem auto;
+  max-width: 700px;
+}
+
+.tm-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border-color);
+  outline: none;
+  cursor: pointer;
+}
+
+.tm-year-label {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.tech-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tech-table th {
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tech-table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   DIFF COMPARATOR TAB
+   ========================================================================== */
+.diff-controls-bar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.diff-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.diff-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.diff-year-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.diff-metric {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.diff-insights-box {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid var(--accent-green);
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* ==========================================================================
+   NEW SI 2019 INTERACTIVE CARDS
+   ========================================================================== */
+.new-si-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.si-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.si-card-sym {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.si-card-unit {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.si-card-val {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: #060a12;
+  border: 1px solid var(--border-color);
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  color: #38bdf8;
+}
+
+/* ==========================================================================
+   CLI TERMINAL EMULATOR
+   ========================================================================== */
+.cli-terminal-window {
+  background: #06090e;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+}
+
+.cli-titlebar {
+  background: #111827;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.cli-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.cli-output-area {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cli-line.cli-sys { color: #94a3b8; }
+.cli-line.cli-user { color: #f1f5f9; font-weight: 700; }
+.cli-line.cli-info { color: #38bdf8; }
+.cli-line.cli-success { color: #4ade80; }
+.cli-line.cli-error { color: #f87171; }
+
+.cli-input-row {
+  display: flex;
+  align-items: center;
+  background: #0b111b;
+  border-top: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+}
+
+.cli-prompt-symbol {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.cli-text-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+/* ==========================================================================
+   PRINTER & PDF OPTIMIZATIONS (@media print)
+   ========================================================================== */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .app-header,
+  .navigation-bar,
+  .timemachine-controls,
+  .diff-controls-bar,
+  .cli-terminal-window,
+  .header-actions,
+  .btn-action,
+  .nav-tab-btn,
+  #constant-select {
+    display: none !important;
+  }
+
+  .workspace-container,
+  .tab-content-area,
+  .tab-pane {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: #ffffff !important;
+  }
+
+  #tab-timeline {
+    display: block !important;
+  }
+
+  #tab-timemachine, #tab-diff, #tab-newsi, #tab-terminal, #tab-teoria {
+    display: none !important;
+  }
+
+  .constant-hero-card,
+  .chart-card,
+  .milestone-card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+  }
+}
